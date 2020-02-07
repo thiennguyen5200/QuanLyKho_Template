@@ -1,0 +1,10 @@
+mat-form-field {
+    margin-right: 12px;
+}
+.mat-dialog-content{
+    overflow: inherit;
+}
+.row {
+    margin-right: unset;
+    margin-left: unset;
+}

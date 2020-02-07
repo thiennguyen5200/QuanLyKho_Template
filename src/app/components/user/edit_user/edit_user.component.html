@@ -1,0 +1,34 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<div class="dailog_user">
+  <h1 mat-dialog-title>Chỉnh sửa thông tin!</h1>
+  <div mat-dialog-content>
+    <!-- <mat-slide-toggle [checked]="status" [(ngModel)]="status" >
+      <div *ngIf="status; then tr else fs"></div>
+      <ng-template #tr>Kích hoạt</ng-template>
+      <ng-template #fs>Không kích hoạt</ng-template>
+    </mat-slide-toggle> -->
+    <div class="row">
+      <mat-form-field>
+        <input matInput [formControl]="name" [(ngModel)]="data.name" placeholder="Họ và Tên" required>
+        <mat-error *ngIf="name.invalid">{{getNameErrorMessage()}}</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput [formControl]="email" [(ngModel)]="data.email" placeholder="Email" required>
+        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+    
+      <mat-form-field>
+        <input matInput type="number" [formControl]="phone" [(ngModel)]="data.phone" placeholder="Sđt" required>
+        <mat-error *ngIf="phone.invalid">{{getPhoneErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row" style="float: right; float: inline-end;">
+      <div mat-dialog-actions >
+        <button mat-raised-button (click)="onNoClick()">Hủy</button>
+        <button mat-raised-button (click)="updateUser(data)" color="primary" 
+        [disabled]="email.invalid || name.invalid || phone.invalid" cdkFocusInitial>Cập nhập</button>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+
+<mat-form-field style="width: -webkit-fill-available;">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Tìm kiếm...">
+</mat-form-field>
+<div style="padding: 0px 0px 20px 0px;">
+<button 
+mat-raised-button 
+matTooltip="Tạo tài khoản"
+(click)="openDialogCreateProduct()"
+>
+Thêm</button>
+<br>
+</div>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Bạn có chắc muốn xóa sản phẩm này?</p>
+      <button type="button" class="btn btn-default" style="float: left;" (click)="decline()" >Hủy</button>
+      <button type="button" class="btn btn-primary" style="float: right;"(click)="submitDelete()" >Xóa</button>
+    </div>
+</ng-template>
+
+<div class="mat-elevation-z8" *ngIf="!loading">
+  <table mat-table [dataSource]="dataSource" matSort>
+    
+    <!-- Product name Column -->
+    <ng-container matColumnDef="product_name">
+      <th style="width: 45%" mat-header-cell *matHeaderCellDef mat-sort-header>Tên sản phẩm</th>
+      <td mat-cell *matCellDef="let row"> {{row.product_name}} </td>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="amount">
+      <th style="width: 20%" mat-header-cell *matHeaderCellDef mat-sort-header>Số lượng tồn</th>
+      <td mat-cell *matCellDef="let row"> {{row.amount}} </td>
+    </ng-container>
+
+    <!-- Create Date Column -->
+    <ng-container matColumnDef="xuat">
+      <th style="width: 10%," mat-header-cell *matHeaderCellDef mat-sort-header>Xuất kho</th>
+      <td mat-cell *matCellDef="let row"> 
+        <button *ngIf="row.checkedExport" mat-button (click)="export(row._id)" ><mat-icon>vertical_align_top</mat-icon></button>
+        <div *ngIf="!row.checkedExport" class="input-group" style="width: 70px">
+          <input type="number" min="0" autofocus [(ngModel)]="valueExport" (keyup.enter)="submitExport(row._id)" class="form-control">
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Create Date Column -->
+    <ng-container matColumnDef="nhap">
+        <th style="width: 10%" mat-header-cell *matHeaderCellDef mat-sort-header>Nhập kho</th>
+        <td mat-cell *matCellDef="let row">
+          <button *ngIf="row.checkedImport" mat-button (click)="import(row._id)"><mat-icon>vertical_align_bottom</mat-icon></button>
+          <div *ngIf="!row.checkedImport" class="input-group" style="width: 70px">
+            <input type="number" min="0" autofocus [(ngModel)]="valueImport"  (keyup.enter)="submitImport(row._id)" class="form-control">
+          </div>
+        </td>
+      </ng-container>
+
+    <!-- Status Column -->
+    <!-- <ng-container matColumnDef="status">
+      <th style="width: 10%" mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái </th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.status ? 'blue' : 'red'" > 
+        {{row.status ? "Kích hoạt": "Không kích hoạt"}} 
+      </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="edit">
+      <th style="width: 5%" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row"><button mat-button *ngIf="checkEventEdit(row)" (click)="openDialogEditProduct(row._id, row.product_name, row.amount)"><mat-icon>edit</mat-icon></button></td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th style="width: 5%" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" style="color: red">
+        <div *ngIf="row.account !== 'admin'">
+            <button mat-button *ngIf="_token.account === 'admin'" (click)="openModal(template, row._id)"><mat-icon >delete</mat-icon></button>
+        </div>
+      </td>
+    </ng-container>
+    
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  
+</div>
+
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

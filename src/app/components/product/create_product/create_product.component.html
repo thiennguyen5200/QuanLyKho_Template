@@ -1,0 +1,23 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<div class="dailog_product">
+  <h1 mat-dialog-title>Thêm sản phẩm!</h1>
+  <hr>
+  <div mat-dialog-content style="height: 183px;">
+    <form [formGroup]="formCreateProduct" (submit)="createProduct(data)">
+      <mat-form-field>
+        <input matInput formControlName="name"  (change)="checkProductName()" [(ngModel)]="data.product_name" placeholder="Tên sản phẩm" required>
+        <mat-error *ngIf="formCreateProduct.controls['name'].hasError('required')">Vui lòng nhập tên sản phẩm!</mat-error>
+        <mat-error *ngIf="formCreateProduct.controls['name'].hasError('incorrect')">Sản phẩm này đã tồn tại!</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="amount" type="number" [(ngModel)]="data.amount" placeholder="Số lượng" required>
+        <mat-error *ngIf="formCreateProduct.controls['amount'].hasError('required')">Vui lòng nhập số lượng!</mat-error>
+      </mat-form-field>
+      <div mat-dialog-actions style="float: right;">
+        <button mat-raised-button type="button" (click)="onNoClick()">Hủy</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="formCreateProduct.invalid || _isCheckProductName" cdkFocusInitial>Thêm</button>
+      </div>
+  </form>
+</div>

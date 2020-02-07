@@ -1,0 +1,47 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<div class="dailog_user">
+  <h1 mat-dialog-title>Thêm tài khoản!</h1>
+  <div mat-dialog-content style="height: 350px;">
+    <form [formGroup]="formCreateUser" (submit)="createUser(data)">
+    <mat-grid-list cols="2">
+    <mat-form-field appearance="fill">
+      <mat-label>Tài khoản</mat-label>
+      <input matInput formControlName="account"  (change)="checkAccount()" [(ngModel)]="data.account" placeholder="Tài khoản" required>
+      <mat-error *ngIf="formCreateUser.controls['account'].hasError('required')">Vui lòng nhập tài khoản!</mat-error>
+      <mat-error *ngIf="formCreateUser.controls['account'].hasError('incorrect')">Tài khoản đã tồn tại!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Mật khẩu</mat-label>
+      <input matInput formControlName="pass" type="password" [(ngModel)]="data.pass" placeholder="Mật khẩu" required>
+      <mat-error *ngIf="formCreateUser.controls['pass'].hasError('required')">Bạn chưa nhập mật khẩu!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Họ và Tên</mat-label>
+      <input matInput formControlName="name" [(ngModel)]="data.name" placeholder="Họ và Tên" required>
+      <mat-error *ngIf="formCreateUser.controls['name'].hasError('required')">Bạn chưa nhập họ và tên!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" [(ngModel)]="data.email" placeholder="Email" required>
+      <mat-error *ngIf="formCreateUser.controls['email'].hasError('required')">Bạn chưa nhập email!</mat-error>
+      <mat-error *ngIf="formCreateUser.controls['email'].hasError('email')">Định dạng email không đúng!</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Sđt</mat-label>
+      <input matInput type="number" formControlName="phone" [(ngModel)]="data.phone" placeholder="Sđt" required>
+      <mat-error *ngIf="formCreateUser.controls['phone'].hasError('required')">Bạn chưa nhập số điện thoại!</mat-error>
+      <mat-error *ngIf="formCreateUser.controls['phone'].hasError('minlength')">Số điện thoại phải đủ 10 số!</mat-error>
+    </mat-form-field>
+    
+  </mat-grid-list>
+    <div mat-dialog-actions style="float: right;">
+      <button mat-raised-button type="button" (click)="onNoClick()">Hủy</button>
+      <button mat-raised-button type="submit" color="primary" [disabled]="formCreateUser.invalid || _isCheckAccount" cdkFocusInitial>Thêm</button>
+    </div>
+  </form>
+</div>

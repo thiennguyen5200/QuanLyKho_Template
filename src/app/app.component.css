@@ -1,0 +1,79 @@
+.side-container{
+    position: absolute;
+    top: 60px;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    background-color: rgba(217, 231, 236, 0.616)
+}
+
+.toolbar-footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.toolbar-header{
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.side_menu{
+    width: 230px;
+    height: 825px;
+    background-color:rgb(238, 247, 248);
+    color: aliceblue;
+    margin-left: 20px;
+    margin-top: 10px;
+    border: 0;
+    text-align: center;
+    border-radius: 9px;
+}
+
+.side_content{
+    margin-top: 10px;
+    padding: 20px,
+}
+
+.menu-item{
+    background-color: rgba(238, 247, 248, 0);
+    color: rgb(32, 83, 83);
+    font-size: 18px;
+}
+.menu-card{
+    background-color: rgba(215, 234, 252, 0.788);
+    margin-top: -15px
+}
+#sidenav.menu-close {
+    width: 70px
+}
+
+#sidenav.menu-open {
+    width: 230px
+}
+
+#sidenav .avatar {
+    background-size: cover;
+}
+
+#sidenav .menu-item {
+    width: 100%;
+    border-radius: 0;
+    text-align: left;
+    padding: 10px;
+}
+
+#sidenav .menu-item:hover {
+    background: rgba(238, 238, 238, 0);
+  }
+#sidenav .menu-item mat-icon {
+    margin-right: 20px;
+    margin-left: -1px;
+}
+.spacer{
+    flex: 1 1 auto
+}
+

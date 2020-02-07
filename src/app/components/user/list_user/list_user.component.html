@@ -1,0 +1,93 @@
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Tim Kiem">
+</mat-form-field>
+<div style="padding: 0px 0px 20px 0px;">
+<button 
+mat-raised-button 
+matTooltip="Them nguoi dung moi"
+(click)="openDialogCreateUser()"
+>
+Thêm</button>
+<br>
+</div>
+
+
+<div class="mat-elevation-z8" *ngIf="!loading">
+    <ng-template #template>
+        <div class="modal-body text-center">
+          <p>Bạn có chắc muốn xóa tài khoản này?</p>
+          <button type="button" class="btn btn-default" style="float: left;" (click)="decline()" >Hủy</button>
+          <button type="button" class="btn btn-primary" style="float: right;" (click)="submitDelete()" >Xóa</button>
+        </div>
+    </ng-template>
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Account Column -->
+    <ng-container matColumnDef="account">
+        <th style="width: 15%" mat-header-cell *matHeaderCellDef mat-sort-header>Tài khoản </th>
+        <td mat-cell *matCellDef="let row"> {{row.account}} </td>
+      </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th style="width: 20%" mat-header-cell *matHeaderCellDef mat-sort-header>Họ và Tên </th>
+      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th style="width: 20%" mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+    </ng-container>
+
+    <!-- Phone Column -->
+    <ng-container matColumnDef="phone">
+      <th style="width: 10%" mat-header-cell *matHeaderCellDef mat-sort-header> Sđt </th>
+      <td mat-cell *matCellDef="let row"> {{row.phone}} </td>
+    </ng-container>
+
+    <!-- Create Date Column -->
+    <ng-container matColumnDef="create_date">
+      <th style="width: 10%" mat-header-cell *matHeaderCellDef mat-sort-header> Ngày đăng ký </th>
+      <td mat-cell *matCellDef="let row"> {{row.create_date | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th style="width: 10%" mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái </th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.status ? 'blue' : 'red'" > 
+        {{row.status ? "Kích hoạt": "Không kích hoạt"}} 
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th style="width: 5%" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row"><button mat-button *ngIf="checkEventEdit(row)"><mat-icon (click)="openDialogEditUser(row._id, row.name, row.email, row.phone, row.status)">edit</mat-icon></button></td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th style="width: 5%" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" style="color: red">
+        <div *ngIf="row.account !== 'admin'">
+            <button mat-button *ngIf="_token.account === 'admin'" (click)="openModal(template, row._id)"><mat-icon >delete</mat-icon></button>
+        </div>
+      </td>
+    </ng-container>
+    
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  
+</div>
+
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

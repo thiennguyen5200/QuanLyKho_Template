@@ -1,0 +1,84 @@
+
+<div *ngIf="!!accountUser">
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <mat-toolbar class="toolbar-header" style="background-color: rgb(238, 247, 248); color: rgb(32, 157, 230)">
+    <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>subject</mat-icon></button>
+    <!-- <img style="width: 50px;height: 50px;" src="/assets/logo-KF.png"> -->
+    <h1 [routerLink]="['/']" routerLinkActive="active" class="example-app-name"  >Quan Ly Kho</h1>
+    <span class="spacer"></span>
+    <span class="fill-remaining-space">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item>
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>people_outline</mat-icon>
+          <span>Connecting</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>videocam</mat-icon>
+          <span>Let's talk</span>
+        </button>
+        <button mat-menu-item (click)="Logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </span>
+  </mat-toolbar>
+  
+  <mat-sidenav-container class="side-container">
+    <mat-sidenav #sidenav mode="side" opened class="side_menu" >
+      <mat-nav-list class="mat_item">
+        <mat-list>
+            <mat-card class="menu-card">
+                <mat-card-header>
+                  <div mat-card-avatar class="avatar">
+
+                  </div>
+                  <mat-card-title>{{accountUser.name}}</mat-card-title>
+                  <mat-card-subtitle>Internal</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+            <mat-list-item >
+              <button class="menu-item" mat-flat-button routerLink='/user' routerLinkActive="active">
+                  <mat-icon>recent_actors</mat-icon>
+                  Người dùng
+              </button>
+            </mat-list-item>
+            <mat-list-item>
+              <button class="menu-item" mat-flat-button routerLink='/product' routerLinkActive="active">
+                  <mat-icon>double_arrow</mat-icon>
+                  Sản phẩm
+              </button>
+            </mat-list-item>
+            <mat-list-item>
+              <button class="menu-item" mat-flat-button>
+                <mat-icon>double_arrow</mat-icon>
+                Thống kê
+              </button>
+            </mat-list-item>
+        </mat-list>
+      </mat-nav-list>
+    </mat-sidenav>
+    
+    <mat-sidenav-content class="side_content " >
+      <div style="padding: 40px">
+          <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+  
+  <mat-toolbar class="toolbar-footer">
+      <p>Footer</p>
+  </mat-toolbar>
+</div>
+
+<div *ngIf="!accountUser">
+    <app-signIn></app-signIn>
+</div>

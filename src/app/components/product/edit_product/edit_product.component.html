@@ -1,0 +1,23 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<div class="dailog_user">
+  <h1 mat-dialog-title>Cập nhật sản phẩm!</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="formEditProduct" (submit)="updateProduct(data)">
+        <mat-form-field>
+          <input matInput formControlName="product_name" [(ngModel)]="data.product_name"   placeholder="Tên sản phẩm" required>
+          <mat-error *ngIf="formEditProduct.controls['product_name'].hasError('required')">Vui lòng nhập tên sản phẩm!</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <input matInput type="number" formControlName="amount" [(ngModel)]="data.amount" placeholder="Số lượng tồn" required>
+          <mat-error *ngIf="formEditProduct.controls['amount'].hasError('required')">Vui lòng nhập số lượng tồn!</mat-error>
+        </mat-form-field>
+        <hr>
+    <div mat-dialog-actions style="float: right;">
+      <button mat-raised-button type="button" (click)="onNoClick()">Hủy</button>
+      <button mat-raised-button type="submit" color="primary" [disabled]="formEditProduct.invalid" cdkFocusInitial>Cập nhập</button>
+    </div>
+    </form>
+</div>
+</div>
